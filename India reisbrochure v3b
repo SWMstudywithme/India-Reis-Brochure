@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>India Klimaatreis 12 Dagen</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<style>
+body {
+    margin:0;
+    font-family: Arial, sans-serif;
+    background:#0b1220;
+    color:white;
+}
+
+header {
+    padding:25px;
+    text-align:center;
+    background:#111827;
+}
+
+h1 { margin:0; }
+h2 { color:#fbbf24; }
+
+section {
+    max-width:1000px;
+    margin:auto;
+    padding:20px;
+}
+
+.card {
+    background:#1f2937;
+    padding:15px;
+    margin:12px 0;
+    border-radius:12px;
+}
+
+#map {
+    height:520px;
+    border-radius:14px;
+    border:2px solid #334155;
+}
+
+.badge {
+    display:inline-block;
+    padding:5px 10px;
+    border-radius:20px;
+    background:#2563eb;
+    margin:3px;
+    font-size:12px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🇮🇳 India 12-daagse Klimaatreis</h1>
+<p>Reis door tropisch regenwoud → woestijn → Himalaya → Gangesvlakte</p>
+</header>
+
+<section>
+<h2>🗺️ Interactieve animatiekaart</h2>
+<div id="map"></div>
+</section>
+
+<section>
+<h2>✈️ Dagplanning</h2>
+
+<div class="card">
+<span class="badge">Dag 1–3</span> 🌴 Tropisch regenwoud (Kerala)<br>
+Moessonklimaat, hoge luchtvochtigheid, jungle & specerijen
+</div>
+
+<div class="card">
+<span class="badge">Dag 4–6</span> 🏜️ Woestijn (Rajasthan)<br>
+Thar Desert, zandduinen, kameelsafari
+</div>
+
+<div class="card">
+<span class="badge">Dag 7–9</span> ❄️ Himalaya (toendra/hooggebergte)<br>
+Sneeuw, gletsjers, bergdorpen
+</div>
+
+<div class="card">
+<span class="badge">Dag 10–12</span> 🌿 Gematigd (Delhi & Gangesvlakte)<br>
+Rivieren, steden, tempels, markten
+</div>
+
+</section>
+
+<section>
+<h2>🧠 Geografie & cultuur</h2>
+
+<div class="card">
+Landschappen: regenwoud, woestijn, gebergte, rivierdelta’s<br><br>
+
+Culturen: hindoeïsme, islam, sikhisme, boeddhisme<br><br>
+
+Heilige plekken:
+- [Varanasi](chatgpt://generic-entity?number=0)
+- [Ganges](chatgpt://generic-entity?number=1)
+- [Rishikesh](chatgpt://generic-entity?number=2)
+</div>
+
+<div class="card">
+Typisch India: drukte, kleuren, koeien op straat, streetfood, tempels
+</div>
+
+</section>
+
+<section>
+<h2>🧳 Praktisch</h2>
+
+<div class="card">
+Visa: e-visa vooraf aanvragen<br>
+Vaccinaties: DTP, Hepatitis A, buiktyfus<br>
+Paklijst: lichte kleding, regenjas, warme kleding, medicijnen
+</div>
+
+</section>
+
+<script>
+
+// 🗺️ kaart
+var map = L.map('map').setView([22.5, 80], 5);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:'India reis'
+}).addTo(map);
+
+// 🌍 route
+const route = [
+    [10.0, 76.3],
+    [14.0, 74.0],
+    [22.3, 70.8],
+    [26.9, 70.9],
+    [28.6, 77.2],
+    [31.0, 78.0],
+    [34.0, 77.5]
+];
+
+// lijn
+L.polyline(route,{
+    color:'cyan',
+    weight:4
+}).addTo(map);
+
+// markers
+L.marker([10.0,76.3]).addTo(map).bindPopup("🌴 Regenwoud");
+L.marker([26.9,70.9]).addTo(map).bindPopup("🏜️ Woestijn");
+L.marker([34.0,77.5]).addTo(map).bindPopup("❄️ Himalaya");
+L.marker([28.6,77.2]).addTo(map).bindPopup("🌿 Gematigd");
+
+// ✈️ animatie
+let marker = L.marker(route[0]).addTo(map);
+let i = 0;
+
+function move(){
+    if(i < route.length){
+        marker.setLatLng(route[i]);
+        map.panTo(route[i], {animate:true});
+        i++;
+        setTimeout(move, 1200);
+    } else {
+        i = 0;
+        setTimeout(move, 1500);
+    }
+}
+
+move();
+
+</script>
+
+</body>
+</html>
