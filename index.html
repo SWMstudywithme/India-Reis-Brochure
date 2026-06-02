@@ -1,49 +1,56 @@
+<script>
+
 var map = L.map('map').setView([22.5,80],5);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
 attribution:'India Journey'
 }).addTo(map);
 
-// helper popup met foto
-function place(title, img, text){
+// 📍 Popup template met foto
+function createPopup(title, image, text){
 return `
-<div style="width:200px">
-<b>${title}</b><br>
+<div style="width:220px">
+<b style="font-size:14px">${title}</b><br>
 <small>${text}</small><br>
-<img src="${img}" style="width:100%;border-radius:8px;margin-top:5px;">
+<img src="${image}" style="width:100%;border-radius:10px;margin-top:6px;">
 </div>
 `;
 }
 
-// MARKERS MET FOTO’S
+// 🌴 Kerala – tropisch
 L.marker([10.0,76.3]).addTo(map).bindPopup(
-place(
+createPopup(
 "Kerala 🌴",
 "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=60",
-"Tropisch regenwoud & backwaters"
+"Tropisch regenwoud, backwaters en palmbossen"
 )
 );
 
+// 🏜️ Rajasthan – woestijn
 L.marker([26.9,70.9]).addTo(map).bindPopup(
-place(
+createPopup(
 "Rajasthan 🏜️",
 "https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&fit=crop&w=600&q=60",
-"Woestijn, forten en zandduinen"
+"Zandduinen, forten en extreme hitte"
 )
 );
 
+// ❄️ Himalaya – bergen
 L.marker([34.0,77.5]).addTo(map).bindPopup(
-place(
+createPopup(
 "Himalaya ❄️",
 "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=60",
-"Hoge bergen en sneeuwlandschappen"
+"Hoge bergtoppen, sneeuw en stilte"
 )
 );
 
+// 🔥 Varanasi – heilige stad
 L.marker([28.6,77.2]).addTo(map).bindPopup(
-place(
+createPopup(
 "Varanasi 🔥",
 "https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=600&q=60",
-"Heilige stad aan de Ganges"
+"Heilige stad aan de Ganges, rituelen en spiritualiteit"
 )
 );
+
+</script>
