@@ -1,56 +1,202 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>India – Klimaat & Cultuurreis</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#0b1220;
+color:white;
+line-height:1.6;
+}
+
+header{
+padding:50px 20px;
+text-align:center;
+background:linear-gradient(135deg,#111827,#0b1220);
+}
+
+h1{margin:0;font-size:34px;}
+h2{color:#fbbf24;margin-top:40px;}
+
+section{
+max-width:1000px;
+margin:auto;
+padding:20px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+align-items:center;
+margin:30px 0;
+}
+
+.grid img{
+width:100%;
+height:280px;
+object-fit:cover;
+border-radius:12px;
+}
+
+.card{
+background:#111827;
+padding:20px;
+border-radius:12px;
+margin:20px 0;
+}
+
+#map{
+height:520px;
+border-radius:14px;
+border:2px solid #334155;
+margin-top:20px;
+}
+
+footer{
+text-align:center;
+padding:30px;
+color:#94a3b8;
+border-top:1px solid #1f2937;
+margin-top:50px;
+}
+
+@media(max-width:768px){
+.grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>India – Klimaat & Cultuurreis</h1>
+<p>Een reis door 4 werelden: jungle, woestijn, bergen en heilige steden</p>
+</header>
+
+<section>
+
+<h2>India in één blik</h2>
+<p>
+India is een land van extreme contrasten. In één reis ga je van tropisch regenwoud naar droge woestijnen en eindigt in het hoogste gebergte ter wereld.
+</p>
+
+</section>
+
+<section>
+
+<h2>Vier klimaatzones</h2>
+
+<div class="grid">
+<div>
+<h2>🌴 Tropisch regenwoud – Kerala</h2>
+<p>Groene jungle, backwaters en warme vochtige lucht. Alles beweegt langzaam en natuurlijk.</p>
+</div>
+<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=60">
+</div>
+
+<div class="grid">
+<img src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&fit=crop&w=1200&q=60">
+<div>
+<h2>🏜️ Woestijn – Rajasthan</h2>
+<p>Zandduinen, forten en extreme hitte. Een landschap dat eindeloos voelt.</p>
+</div>
+</div>
+
+<div class="grid">
+<div>
+<h2>❄️ Hooggebergte – Himalaya</h2>
+<p>IJle lucht, sneeuw en gigantische bergtoppen. Stilte domineert hier alles.</p>
+</div>
+<img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=60">
+</div>
+
+<div class="grid">
+<img src="https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=1200&q=60">
+<div>
+<h2>🔥 Heilige steden – Gangesvlakte</h2>
+<p>Spirituele energie in steden zoals [Varanasi](chatgpt://generic-entity?number=0) aan de [Ganges](chatgpt://generic-entity?number=1).</p>
+</div>
+</div>
+
+</section>
+
+<section>
+
+<h2>Reisroute door India</h2>
+<div id="map"></div>
+
+</section>
+
+<section>
+
+<div class="card">
+<h2>Wat maakt India uniek?</h2>
+<p>
+India heeft geen één landschap of cultuur. Elke regio voelt als een ander land met eigen klimaat, religie en tradities.  
+Van koeien op straat tot heilige rivieren en eeuwenoude tempels.
+</p>
+</div>
+
+</section>
+
+<footer>
+Published by T&D V3B
+</footer>
+
 <script>
 
 var map = L.map('map').setView([22.5,80],5);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-attribution:'India Journey'
+attribution:'India Map'
 }).addTo(map);
 
-// 📍 Popup template met foto
-function createPopup(title, image, text){
+// popup met 1 foto
+function popup(title, img, text){
 return `
 <div style="width:220px">
-<b style="font-size:14px">${title}</b><br>
+<b>${title}</b><br>
 <small>${text}</small><br>
-<img src="${image}" style="width:100%;border-radius:10px;margin-top:6px;">
+<img src="${img}" style="width:100%;border-radius:10px;margin-top:6px;">
 </div>
 `;
 }
 
-// 🌴 Kerala – tropisch
+// markers
 L.marker([10.0,76.3]).addTo(map).bindPopup(
-createPopup(
-"Kerala 🌴",
-"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=60",
-"Tropisch regenwoud, backwaters en palmbossen"
-)
+popup("Kerala 🌴",
+"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+"Tropisch regenwoud en backwaters")
 );
 
-// 🏜️ Rajasthan – woestijn
 L.marker([26.9,70.9]).addTo(map).bindPopup(
-createPopup(
-"Rajasthan 🏜️",
-"https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&fit=crop&w=600&q=60",
-"Zandduinen, forten en extreme hitte"
-)
+popup("Rajasthan 🏜️",
+"https://images.unsplash.com/photo-1509316785289-025f5b846b35",
+"Woestijn en forten")
 );
 
-// ❄️ Himalaya – bergen
 L.marker([34.0,77.5]).addTo(map).bindPopup(
-createPopup(
-"Himalaya ❄️",
-"https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=60",
-"Hoge bergtoppen, sneeuw en stilte"
-)
+popup("Himalaya ❄️",
+"https://images.unsplash.com/photo-1469474968028-56623f02e42e",
+"Bergen en sneeuw")
 );
 
-// 🔥 Varanasi – heilige stad
 L.marker([28.6,77.2]).addTo(map).bindPopup(
-createPopup(
-"Varanasi 🔥",
-"https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=600&q=60",
-"Heilige stad aan de Ganges, rituelen en spiritualiteit"
-)
+popup("Varanasi 🔥",
+"https://images.unsplash.com/photo-1561361058-c24cecae35ca",
+"Heilige stad aan de Ganges")
 );
 
 </script>
+
+</body>
+</html>
