@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>India – Klimaat & Cultuurreis</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>India Reis</title>
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 <style>
@@ -18,13 +18,13 @@ line-height:1.6;
 }
 
 header{
-padding:50px 20px;
+padding:40px;
 text-align:center;
-background:linear-gradient(135deg,#111827,#0b1220);
+background:#111827;
 }
 
-h1{margin:0;font-size:34px;}
-h2{color:#fbbf24;margin-top:40px;}
+h1{margin:0;}
+h2{color:#fbbf24;}
 
 section{
 max-width:1000px;
@@ -42,7 +42,7 @@ margin:30px 0;
 
 .grid img{
 width:100%;
-height:280px;
+height:250px;
 object-fit:cover;
 border-radius:12px;
 }
@@ -55,9 +55,8 @@ margin:20px 0;
 }
 
 #map{
-height:520px;
-border-radius:14px;
-border:2px solid #334155;
+height:500px;
+border-radius:12px;
 margin-top:20px;
 }
 
@@ -66,39 +65,40 @@ text-align:center;
 padding:30px;
 color:#94a3b8;
 border-top:1px solid #1f2937;
-margin-top:50px;
+margin-top:40px;
 }
 
 @media(max-width:768px){
 .grid{grid-template-columns:1fr;}
 }
 </style>
+
 </head>
 
 <body>
 
 <header>
-<h1>India – Klimaat & Cultuurreis</h1>
-<p>Een reis door 4 werelden: jungle, woestijn, bergen en heilige steden</p>
+<h1>🇮🇳 India Reis</h1>
+<p>Van jungle tot woestijn en Himalaya</p>
 </header>
 
 <section>
 
-<h2>India in één blik</h2>
-<p>
-India is een land van extreme contrasten. In één reis ga je van tropisch regenwoud naar droge woestijnen en eindigt in het hoogste gebergte ter wereld.
-</p>
+<h2>Over de reis</h2>
+<div class="card">
+India is een land met extreme contrasten. Je reist door tropisch regenwoud, droge woestijnen, hoge bergen en heilige steden.
+</div>
 
 </section>
 
 <section>
 
-<h2>Vier klimaatzones</h2>
+<h2>Klimaatzones</h2>
 
 <div class="grid">
 <div>
-<h2>🌴 Tropisch regenwoud – Kerala</h2>
-<p>Groene jungle, backwaters en warme vochtige lucht. Alles beweegt langzaam en natuurlijk.</p>
+<h3>🌴 Kerala</h3>
+<p>Tropisch regenwoud, veel water en natuur.</p>
 </div>
 <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=60">
 </div>
@@ -106,15 +106,15 @@ India is een land van extreme contrasten. In één reis ga je van tropisch regen
 <div class="grid">
 <img src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&fit=crop&w=1200&q=60">
 <div>
-<h2>🏜️ Woestijn – Rajasthan</h2>
-<p>Zandduinen, forten en extreme hitte. Een landschap dat eindeloos voelt.</p>
+<h3>🏜️ Rajasthan</h3>
+<p>Woestijn, hitte en oude forten.</p>
 </div>
 </div>
 
 <div class="grid">
 <div>
-<h2>❄️ Hooggebergte – Himalaya</h2>
-<p>IJle lucht, sneeuw en gigantische bergtoppen. Stilte domineert hier alles.</p>
+<h3>❄️ Himalaya</h3>
+<p>Bergen, sneeuw en stilte.</p>
 </div>
 <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=60">
 </div>
@@ -122,8 +122,8 @@ India is een land van extreme contrasten. In één reis ga je van tropisch regen
 <div class="grid">
 <img src="https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=1200&q=60">
 <div>
-<h2>🔥 Heilige steden – Gangesvlakte</h2>
-<p>Spirituele energie in steden zoals [Varanasi](chatgpt://generic-entity?number=0) aan de [Ganges](chatgpt://generic-entity?number=1).</p>
+<h3>🔥 Varanasi</h3>
+<p>Heilige stad aan de Ganges.</p>
 </div>
 </div>
 
@@ -131,7 +131,7 @@ India is een land van extreme contrasten. In één reis ga je van tropisch regen
 
 <section>
 
-<h2>Reisroute door India</h2>
+<h2>Reisroute</h2>
 <div id="map"></div>
 
 </section>
@@ -139,11 +139,8 @@ India is een land van extreme contrasten. In één reis ga je van tropisch regen
 <section>
 
 <div class="card">
-<h2>Wat maakt India uniek?</h2>
-<p>
-India heeft geen één landschap of cultuur. Elke regio voelt als een ander land met eigen klimaat, religie en tradities.  
-Van koeien op straat tot heilige rivieren en eeuwenoude tempels.
-</p>
+<h2>Wat maakt India bijzonder?</h2>
+India heeft geen één landschap. Elke regio voelt als een ander land met eigen cultuur, klimaat en rituelen.
 </div>
 
 </section>
@@ -157,31 +154,29 @@ Published by T&D V3B
 var map = L.map('map').setView([22.5,80],5);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-attribution:'India Map'
+attribution:'India'
 }).addTo(map);
 
-// popup met 1 foto
-function popup(title, img, text){
+function popup(title,img,text){
 return `
-<div style="width:220px">
+<div style="width:200px">
 <b>${title}</b><br>
 <small>${text}</small><br>
-<img src="${img}" style="width:100%;border-radius:10px;margin-top:6px;">
+<img src="${img}" style="width:100%;border-radius:8px;margin-top:5px;">
 </div>
 `;
 }
 
-// markers
 L.marker([10.0,76.3]).addTo(map).bindPopup(
 popup("Kerala 🌴",
 "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
-"Tropisch regenwoud en backwaters")
+"Tropisch regenwoud")
 );
 
 L.marker([26.9,70.9]).addTo(map).bindPopup(
 popup("Rajasthan 🏜️",
 "https://images.unsplash.com/photo-1509316785289-025f5b846b35",
-"Woestijn en forten")
+"Woestijngebied")
 );
 
 L.marker([34.0,77.5]).addTo(map).bindPopup(
@@ -193,7 +188,7 @@ popup("Himalaya ❄️",
 L.marker([28.6,77.2]).addTo(map).bindPopup(
 popup("Varanasi 🔥",
 "https://images.unsplash.com/photo-1561361058-c24cecae35ca",
-"Heilige stad aan de Ganges")
+"Heilige stad")
 );
 
 </script>
