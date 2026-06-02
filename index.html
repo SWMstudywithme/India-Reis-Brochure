@@ -9,48 +9,69 @@
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 <style>
-body {
-    margin:0;
-    font-family: Arial, sans-serif;
-    background:#0b1220;
-    color:white;
+body{
+margin:0;
+font-family:Arial;
+background:#0b1220;
+color:white;
 }
 
-header {
-    padding:25px;
-    text-align:center;
-    background:#111827;
+header{
+padding:30px;
+text-align:center;
+background:#111827;
 }
 
-h1 { margin:0; }
-h2 { color:#fbbf24; }
+h1{margin:0;}
+h2{color:#fbbf24;}
 
-section {
-    max-width:1000px;
-    margin:auto;
-    padding:20px;
+section{
+max-width:1000px;
+margin:auto;
+padding:20px;
 }
 
-.card {
-    background:#1f2937;
-    padding:15px;
-    margin:12px 0;
-    border-radius:12px;
+.card{
+background:#1f2937;
+padding:18px;
+margin:15px 0;
+border-radius:12px;
+line-height:1.5;
 }
 
-#map {
-    height:520px;
-    border-radius:14px;
-    border:2px solid #334155;
+.day{
+background:#111827;
+padding:20px;
+margin:20px 0;
+border-radius:15px;
+border-left:4px solid #38bdf8;
 }
 
-.badge {
-    display:inline-block;
-    padding:5px 10px;
-    border-radius:20px;
-    background:#2563eb;
-    margin:3px;
-    font-size:12px;
+.price{
+color:#34d399;
+font-weight:bold;
+}
+
+img{
+width:100%;
+border-radius:10px;
+margin-top:8px;
+}
+
+#map{
+height:550px;
+border-radius:14px;
+border:2px solid #334155;
+}
+
+.soundbtn{
+background:#2563eb;
+color:white;
+border:none;
+padding:8px 12px;
+border-radius:8px;
+margin:5px;
+cursor:pointer;
 }
 </style>
 </head>
@@ -59,35 +80,58 @@ section {
 
 <header>
 <h1>🇮🇳 India 12-daagse Klimaatreis</h1>
-<p>Reis door tropisch regenwoud → woestijn → Himalaya → Gangesvlakte</p>
+<p>Een reis door contrasten: jungle → woestijn → Himalaya → heilige rivieren</p>
 </header>
 
 <section>
-<h2>🗺️ Interactieve kaart + animatie</h2>
+<h2>🗺️ Interactieve route</h2>
 <div id="map"></div>
 </section>
 
 <section>
-<h2>✈️ Dagplanning</h2>
+<h2>✈️ 12-daagse reiservaring</h2>
 
-<div class="card">
-<span class="badge">Dag 1–3</span> 🌴 Tropisch regenwoud (Kerala)<br>
-Moessonklimaat, jungle, specerijen, hoge luchtvochtigheid
+<div class="day">
+<h3>Dag 1–2 – Kerala 🌴</h3>
+Je komt aan in een wereld van waterwegen, palmbomen en vochtige jungle-lucht. Alles voelt langzaam en tropisch.
+<div class="price">💰 €40–€80 per dag</div>
+<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
+<img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c3a2f">
 </div>
 
-<div class="card">
-<span class="badge">Dag 4–6</span> 🏜️ Woestijn (Rajasthan)<br>
-Thar Desert, zandduinen, kameelsafari
+<div class="day">
+<h3>Dag 3–4 – Backwaters & markten</h3>
+Boottochten door stille kanalen, geurige specerijenmarkten en kleine dorpjes langs het water.
+<div class="price">💰 €25–€70</div>
+<img src="https://images.unsplash.com/photo-1605640840605-14ac1855827b">
 </div>
 
-<div class="card">
-<span class="badge">Dag 7–9</span> ❄️ Himalaya (hooggebergte/toendra)<br>
-Sneeuw, gletsjers, bergdorpen
+<div class="day">
+<h3>Dag 5–6 – Rajasthan 🏜️</h3>
+Het landschap verandert abrupt naar goudgele woestijn en oude fortsteden.
+<div class="price">💰 €50–€120</div>
+<img src="https://images.unsplash.com/photo-1509316785289-025f5b846b35">
 </div>
 
-<div class="card">
-<span class="badge">Dag 10–12</span> 🌿 Gematigd (Delhi / Gangesvlakte)<br>
-Rivieren, steden, markten, tempels
+<div class="day">
+<h3>Dag 7–8 – Kameelsafari</h3>
+Je rijdt door zandduinen terwijl de zon langzaam zakt in de Thar Desert.
+<div class="price">💰 €30–€70</div>
+<img src="https://images.unsplash.com/photo-1589463349208-95817c91f598">
+</div>
+
+<div class="day">
+<h3>Dag 9–10 – Himalaya ❄️</h3>
+Koude lucht, hoge bergen en stilte die bijna onwerkelijk voelt.
+<div class="price">💰 €60–€150</div>
+<img src="https://images.unsplash.com/photo-1500043357865-c6b8827edf9f">
+</div>
+
+<div class="day">
+<h3>Dag 11–12 – Delhi & Varanasi 🌿🔥</h3>
+Chaos, spiritualiteit en historie botsen hier: markten, tempels en de heilige Ganges.
+<div class="price">💰 €40–€90</div>
+<img src="https://images.unsplash.com/photo-1561361058-c24cecae35ca">
 </div>
 
 </section>
@@ -96,82 +140,134 @@ Rivieren, steden, markten, tempels
 <h2>🧠 Geografie & cultuur</h2>
 
 <div class="card">
-Landschappen: regenwoud, woestijn, Himalaya, rivierdalen<br><br>
-
-Culturen: hindoeïsme, islam, sikhisme, boeddhisme<br><br>
-
-Heilige plekken:
-- [Varanasi](chatgpt://generic-entity?number=0)
-- [Ganges](chatgpt://generic-entity?number=1)
-- [Rishikesh](chatgpt://generic-entity?number=2)
+India bestaat uit extreme klimaatzones: tropisch regenwoud in het zuiden, droge woestijnen in het westen en het hoogste gebergte ter wereld in het noorden. Deze contrasten maken het land geografisch uniek.
 </div>
 
 <div class="card">
-Typisch India: drukte, kleuren, streetfood, koeien op straat, tempels
+Spiritueel gezien is India enorm divers. Steden zoals [Varanasi](chatgpt://generic-entity?number=0) aan de [Ganges](chatgpt://generic-entity?number=1) trekken pelgrims van over de hele wereld. Hier draait het leven om rituelen, geloof en traditie.
+</div>
+
+<div class="card">
+Typisch India is de mix van chaos en schoonheid: drukke markten, kleurrijke kleding, heilige koeien en eeuwenoude tempels naast moderne steden.
 </div>
 
 </section>
 
 <section>
-<h2>🧳 Praktisch</h2>
+<h2>🔊 Sound experience</h2>
 
-<div class="card">
-Visa: e-Visa online aanvragen<br>
-Vaccinaties: DTP, Hepatitis A, buiktyfus aanbevolen<br>
-Paklijst: lichte kleding, regenjas, warme kleding, medicijnen
-</div>
+<button class="soundbtn" onclick="playSound('https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8b6f0.mp3?filename=rain-ambient-11093.mp3')">🌧️ Regen Kerala</button>
 
+<button class="soundbtn" onclick="playSound('https://cdn.pixabay.com/download/audio/2022/01/18/audio_4f3f7b.mp3?filename=market-11091.mp3')">🏙️ Markt</button>
+
+<button class="soundbtn" onclick="playSound('https://cdn.pixabay.com/download/audio/2022/10/25/audio_2c9b1a.mp3?filename=desert-11636.mp3')">🏜️ Woestijn</button>
+
+<button class="soundbtn" onclick="playSound('https://cdn.pixabay.com/download/audio/2022/03/10/audio_9b8b3d.mp3?filename=mountain-11089.mp3')">❄️ Himalaya</button>
 </section>
 
 <script>
 
-// 🗺️ MAP
-var map = L.map('map').setView([22.5, 80], 5);
+// MAP
+var map = L.map('map').setView([22.5,80],5);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    attribution:'India reis'
+attribution:'India'
 }).addTo(map);
 
-// 🌍 route
-const route = [
-    [10.0, 76.3],
-    [14.0, 74.0],
-    [22.3, 70.8],
-    [26.9, 70.9],
-    [28.6, 77.2],
-    [31.0, 78.0],
-    [34.0, 77.5]
+// ROUTE
+const route=[
+[10.0,76.3],
+[22.3,70.8],
+[26.9,70.9],
+[28.6,77.2],
+[31.0,78.0],
+[34.0,77.5]
 ];
 
-// lijn
-L.polyline(route,{
-    color:'cyan',
-    weight:4
-}).addTo(map);
+L.polyline(route,{color:'cyan',weight:4}).addTo(map);
 
-// markers
-L.marker([10.0,76.3]).addTo(map).bindPopup("🌴 Tropisch regenwoud");
-L.marker([26.9,70.9]).addTo(map).bindPopup("🏜️ Woestijn");
-L.marker([34.0,77.5]).addTo(map).bindPopup("❄️ Himalaya");
-L.marker([28.6,77.2]).addTo(map).bindPopup("🌿 Gematigd");
-
-// ✈️ animatie
-let marker = L.marker(route[0]).addTo(map);
-let i = 0;
-
-function animate(){
-    if(i < route.length){
-        marker.setLatLng(route[i]);
-        map.panTo(route[i], {animate:true});
-        i++;
-        setTimeout(animate, 1200);
-    } else {
-        i = 0;
-        setTimeout(animate, 1500);
-    }
+// POPUPS
+function popup(title,imgs,text,price,video){
+return `
+<div style="width:220px">
+<b>${title}</b><br>
+<small>${text}</small><br>
+<span style="color:#34d399">${price}</span>
+<img src="${imgs[0]}">
+<img src="${imgs[1]}">
+<br>
+<a href="${video}" target="_blank">🎥 YouTube video</a>
+</div>`;
 }
 
-animate();
+// MARKERS
+L.marker([10.0,76.3]).addTo(map).bindPopup(
+popup(
+"Kerala",
+["https://images.unsplash.com/photo-1500530855697-b586d89ba3ee","https://images.unsplash.com/photo-1602216056096-3b40cc0c3a2f"],
+"Tropisch regenwoud vol backwaters en specerijen",
+"€40–€80",
+"https://www.youtube.com/watch?v=5V7J6H4vV8A"
+)
+);
+
+L.marker([26.9,70.9]).addTo(map).bindPopup(
+popup(
+"Rajasthan",
+["https://images.unsplash.com/photo-1509316785289-025f5b846b35","https://images.unsplash.com/photo-1589463349208-95817c91f598"],
+"Woestijn met forten en kameelsafari’s",
+"€30–€120",
+"https://www.youtube.com/watch?v=1Z7F4gIndia"
+)
+);
+
+L.marker([34.0,77.5]).addTo(map).bindPopup(
+popup(
+"Himalaya",
+["https://images.unsplash.com/photo-1500043357865-c6b8827edf9f","https://images.unsplash.com/photo-1469474968028-56623f02e42e"],
+"Hoge bergen, stilte en gletsjers",
+"€60–€150",
+"https://www.youtube.com/watch?v=HimalayaTravel"
+)
+);
+
+L.marker([28.6,77.2]).addTo(map).bindPopup(
+popup(
+"Delhi / Varanasi",
+["https://images.unsplash.com/photo-1561361058-c24cecae35ca","https://images.unsplash.com/photo-1587474260584-136574528ed5"],
+"Spirituele steden en drukke markten",
+"€40–€90",
+"https://www.youtube.com/watch?v=VaranasiGanges"
+)
+);
+
+// ANIMATIE
+let marker=L.marker(route[0]).addTo(map);
+let i=0;
+
+function move(){
+if(i<route.length){
+marker.setLatLng(route[i]);
+map.panTo(route[i]);
+i++;
+setTimeout(move,1200);
+}else{
+i=0;
+setTimeout(move,1500);
+}
+}
+
+move();
+
+// SOUND
+let audio=new Audio();
+
+function playSound(src){
+audio.pause();
+audio=new Audio(src);
+audio.loop=true;
+audio.play();
+}
 
 </script>
 
