@@ -1,212 +1,49 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>India – 12 Day Climate Journey</title>
-
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-<style>
-body{
-margin:0;
-font-family:Arial;
-background:#0b1220;
-color:white;
-line-height:1.6;
-}
-
-header{
-padding:40px 20px;
-text-align:center;
-background:linear-gradient(135deg,#111827,#0b1220);
-}
-
-h1{margin:0;font-size:32px;}
-h2{color:#fbbf24;margin-top:40px;}
-
-section{
-max-width:1000px;
-margin:auto;
-padding:20px;
-}
-
-/* HERO STYLE CARDS */
-.day{
-display:flex;
-gap:20px;
-background:#111827;
-padding:18px;
-margin:20px 0;
-border-radius:15px;
-align-items:center;
-box-shadow:0 10px 30px rgba(0,0,0,0.3);
-}
-
-.day img{
-width:45%;
-border-radius:12px;
-object-fit:cover;
-height:220px;
-}
-
-.day div{
-width:55%;
-}
-
-.price{
-color:#34d399;
-font-weight:bold;
-margin-top:8px;
-}
-
-/* MAP */
-#map{
-height:520px;
-border-radius:14px;
-border:2px solid #334155;
-}
-
-/* FOOTER */
-footer{
-text-align:center;
-padding:30px;
-margin-top:50px;
-color:#94a3b8;
-border-top:1px solid #1f2937;
-}
-
-/* MOBILE */
-@media(max-width:768px){
-.day{
-flex-direction:column;
-}
-.day img,.day div{
-width:100%;
-height:auto;
-}
-}
-</style>
-</head>
-
-<body>
-
-<header>
-<h1>India – 12 Day Climate Journey</h1>
-<p>Van tropisch regenwoud tot Himalaya pieken en heilige riviersteden</p>
-</header>
-
-<section>
-
-<h2>Een land van extreme contrasten</h2>
-<p>
-India is geen land van één landschap, maar van meerdere werelden tegelijk. 
-Van vochtige jungle in het zuiden tot ijle berglucht in het noorden en eindeloze woestijnen in het westen.
-</p>
-
-</section>
-
-<section>
-
-<h2>Reis door 4 klimaatzones</h2>
-
-<div class="day">
-<div>
-<h3>Kerala – Tropisch regenwoud 🌴</h3>
-Een groene wereld vol waterwegen, palmbomen en stilte op het water. Alles voelt langzaam en intens tegelijk.
-
-<div class="price">€40–€80 per dag</div>
-</div>
-<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=60">
-</div>
-
-<div class="day">
-<div>
-<h3>Rajasthan – Woestijnlandschap 🏜️</h3>
-Zand, forten en eindeloze horizon. Overdag heet, ’s nachts stil en indrukwekkend.
-
-<div class="price">€50–€120 per dag</div>
-</div>
-<img src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&fit=crop&w=1200&q=60">
-</div>
-
-<div class="day">
-<div>
-<h3>Himalaya – Hooggebergte ❄️</h3>
-Bergen die groter lijken dan de wereld zelf. Dunne lucht, stilte en sneeuwlandschappen.
-
-<div class="price">€60–€150 per dag</div>
-</div>
-<img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=60">
-</div>
-
-<div class="day">
-<div>
-<h3>Gangesvlakte – Levend India 🌿</h3>
-Druk, spiritueel en vol energie. Hier komen cultuur, religie en dagelijks leven samen.
-
-<div class="price">€40–€90 per dag</div>
-</div>
-<img src="https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=1200&q=60">
-</div>
-
-</section>
-
-<section>
-
-<h2>Hoogtepunten van de reis</h2>
-
-<div class="day">
-<div>
-<h3>Varanasi – Heilige stad 🔥</h3>
-[Varanasi](chatgpt://generic-entity?number=0) ligt aan de [Ganges](chatgpt://generic-entity?number=1) waar rituelen, gebeden en leven samenkomen in een unieke sfeer.
-
-<div class="price">€30–€80</div>
-</div>
-<img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=1200&q=60">
-</div>
-
-<div class="day">
-<div>
-<h3>Delhi – Chaos & cultuur</h3>
-Een mix van oude tempels, moderne stad en eindeloze markten.
-
-<div class="price">€40–€90</div>
-</div>
-<img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=1200&q=60">
-</div>
-
-</section>
-
-<section>
-
-<h2>Reisroute</h2>
-
-<div id="map"></div>
-
-</section>
-
-<footer>
-Published by T&D V3B
-</footer>
-
-<script>
-
-// MAP
 var map = L.map('map').setView([22.5,80],5);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
 attribution:'India Journey'
 }).addTo(map);
 
-// MARKERS
-L.marker([10.0,76.3]).addTo(map).bindPopup("Kerala – Tropisch regenwoud");
-L.marker([26.9,70.9]).addTo(map).bindPopup("Rajasthan – Woestijn");
-L.marker([34.0,77.5]).addTo(map).bindPopup("Himalaya – Bergen");
-L.marker([28.6,77.2]).addTo(map).bindPopup("Delhi & Varanasi");
+// helper popup met foto
+function place(title, img, text){
+return `
+<div style="width:200px">
+<b>${title}</b><br>
+<small>${text}</small><br>
+<img src="${img}" style="width:100%;border-radius:8px;margin-top:5px;">
+</div>
+`;
+}
 
-</script>
+// MARKERS MET FOTO’S
+L.marker([10.0,76.3]).addTo(map).bindPopup(
+place(
+"Kerala 🌴",
+"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=60",
+"Tropisch regenwoud & backwaters"
+)
+);
 
-</body>
-</html>
+L.marker([26.9,70.9]).addTo(map).bindPopup(
+place(
+"Rajasthan 🏜️",
+"https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&fit=crop&w=600&q=60",
+"Woestijn, forten en zandduinen"
+)
+);
+
+L.marker([34.0,77.5]).addTo(map).bindPopup(
+place(
+"Himalaya ❄️",
+"https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=60",
+"Hoge bergen en sneeuwlandschappen"
+)
+);
+
+L.marker([28.6,77.2]).addTo(map).bindPopup(
+place(
+"Varanasi 🔥",
+"https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=600&q=60",
+"Heilige stad aan de Ganges"
+)
+);
