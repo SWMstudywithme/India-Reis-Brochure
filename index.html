@@ -865,49 +865,49 @@ const droogBestemmingen = [
 {
 name:"Delhi",
 coords:[28.6139,77.2090],
-img:"Image 5.jpg",
+img:"Image 5.jpeg",
 text:"Hoofdstad van India. Belangrijk politiek en economisch centrum."
 },
 
 {
 name:"Varanasi",
 coords:[25.3176,82.9739],
-img:"Image 2.jpg",
+img:"Image 2.jpeg",
 text:"Heiligste stad van het hindoeïsme aan de rivier de Ganges."
 },
 
 {
 name:"Jaipur",
 coords:[26.9124,75.7873],
-img:"Image 3.jpg",
+img:"Image 3.jpeg",
 text:"De Roze Stad van Rajasthan."
 },
 
 {
 name:"Jaisalmer",
 coords:[26.9157,70.9083],
-img:"Image 4.jpg",
+img:"Image 4.jpeg",
 text:"Poort naar de Tharwoestijn."
 },
 
 {
 name:"Kochi",
 coords:[9.9312,76.2673],
-img:"Image.jpg",
+img:"Image.jpeg",
 text:"Historische havenstad in Kerala."
 },
 
 {
 name:"Munnar",
 coords:[10.0889,77.0595],
-img:"Image 1.jpg",
+img:"Image 1.jpeg",
 text:"Beroemd om theeplantages."
 },
 
 {
 name:"Leh",
 coords:[34.1526,77.5771],
-img:"Image 6.jpg",
+img:"Image 6.jpeg",
 text:"Hooggebergtegebied in Ladakh."
 }
 
@@ -922,28 +922,28 @@ const moessonBestemmingen = [
 {
 name:"Kochi",
 coords:[9.9312,76.2673],
-img:"Image.jpg",
+img:"Image.jpeg",
 text:"Veel regen tijdens de moesson."
 },
 
 {
 name:"Munnar",
 coords:[10.0889,77.0595],
-img:"Image 1.jpg",
+img:"Image 1.jpeg",
 text:"Mistige bergen en theevelden."
 },
 
 {
 name:"Alleppey",
 coords:[9.4981,76.3388],
-img:"Image 7.jpg",
+img:"Image 7.jpeg",
 text:"Backwaters en tropische regen."
 },
 
 {
 name:"Leh",
 coords:[34.1526,77.5771],
-img:"Image 6.jpg",
+img:"Image 6.jpeg",
 text:"Blijft relatief droog."
 }
 
@@ -997,199 +997,145 @@ loadMarkers(droogBestemmingen);
 POPUP
 ========================== */
 
-function showPopup(
-title,
-text,
-img
-){
+function showPopup(name,text,img){
 
-document
-.getElementById('popup')
-.style.display='flex';
+document.getElementById('popupTitle').textContent=name;
 
-document
-.getElementById('popupTitle')
-.innerText=title;
+document.getElementById('popupText').textContent=text;
 
-document
-.getElementById('popupText')
-.innerText=text;
+document.getElementById('popupImg').src=img;
 
-document
-.getElementById('popupImg')
-.src=img;
+document.getElementById('popup').style.display='flex';
 
 }
 
 function closePopup(){
 
-document
-.getElementById('popup')
-.style.display='none';
+document.getElementById('popup').style.display='none';
 
 }
 
 /* ==========================
-FUN FACT POPUP
+SEIZOEN SWITCHING
 ========================== */
 
-function showFact(text){
+document.getElementById('dryBtn').addEventListener('click',()=>{
 
-alert(text);
+document.getElementById('dryBtn').classList.add('active');
+
+document.getElementById('dryBtn').classList.remove('inactive');
+
+document.getElementById('wetBtn').classList.remove('active');
+
+document.getElementById('wetBtn').classList.add('inactive');
+
+loadMarkers(droogBestemmingen);
+
+});
+
+document.getElementById('wetBtn').addEventListener('click',()=>{
+
+document.getElementById('wetBtn').classList.add('active');
+
+document.getElementById('wetBtn').classList.remove('inactive');
+
+document.getElementById('dryBtn').classList.remove('active');
+
+document.getElementById('dryBtn').classList.add('inactive');
+
+loadMarkers(moessonBestemmingen);
+
+});
+
+/* ==========================
+FUN FACTS
+========================== */
+
+function showFact(fact){
+
+alert(fact);
 
 }
 
 /* ==========================
-DROOG / MOESSON SWITCH
+RAIN EFFECT
 ========================== */
 
-const dryBtn =
-document.getElementById('dryBtn');
+const canvas=document.getElementById('rainCanvas');
+const ctx=canvas.getContext('2d');
 
-const wetBtn =
-document.getElementById('wetBtn');
-
-dryBtn.addEventListener(
-'click',
-()=>{
-
-dryBtn.classList.add('active');
-wetBtn.classList.remove('active');
-
-loadMarkers(
-droogBestemmingen
-);
-
-document
-.getElementById('rainCanvas')
-.style.display='none';
-
-}
-);
-
-wetBtn.addEventListener(
-'click',
-()=>{
-
-wetBtn.classList.add('active');
-dryBtn.classList.remove('active');
-
-loadMarkers(
-moessonBestemmingen
-);
-
-document
-.getElementById('rainCanvas')
-.style.display='block';
-
-}
-);
-
-/* ==========================
-REGEN EFFECT
-========================== */
-
-const canvas =
-document.getElementById(
-'rainCanvas'
-);
-
-const ctx =
-canvas.getContext('2d');
-
-function resizeCanvas(){
-
-canvas.width=
-window.innerWidth;
-
-canvas.height=
-window.innerHeight;
-
-}
-
-resizeCanvas();
-
-window.addEventListener(
-'resize',
-resizeCanvas
-);
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 
 const drops=[];
 
-for(
-let i=0;
-i<250;
-i++
-){
+class RainDrop{
 
-drops.push({
+constructor(){
 
-x:Math.random()*window.innerWidth,
+this.x=Math.random()*canvas.width;
 
-y:Math.random()*window.innerHeight,
+this.y=Math.random()*canvas.height-canvas.height;
 
-length:10+Math.random()*20,
+this.velocity=Math.random()*3+2;
 
-speed:4+Math.random()*5
-
-});
+this.width=Math.random()*2+1;
 
 }
 
-function rain(){
+draw(){
 
-ctx.clearRect(
-0,
-0,
-canvas.width,
-canvas.height
-);
+ctx.fillStyle='rgba(255,255,255,.5)';
 
-ctx.strokeStyle=
-'rgba(180,220,255,.5)';
+ctx.fillRect(this.x,this.y,this.width,10);
 
-ctx.lineWidth=1;
+}
+
+update(){
+
+this.y+=this.velocity;
+
+if(this.y>canvas.height){
+
+this.y=-10;
+
+this.x=Math.random()*canvas.width;
+
+}
+
+}
+
+}
+
+for(let i=0;i<100;i++){
+
+drops.push(new RainDrop());
+
+}
+
+function animateRain(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
 
 drops.forEach(drop=>{
 
-ctx.beginPath();
+drop.update();
 
-ctx.moveTo(
-drop.x,
-drop.y
-);
-
-ctx.lineTo(
-drop.x,
-drop.y+drop.length
-);
-
-ctx.stroke();
-
-drop.y+=drop.speed;
-
-if(
-drop.y>
-canvas.height
-){
-
-drop.y=-20;
-
-drop.x=
-Math.random()
-*canvas.width;
-
-}
+drop.draw();
 
 });
 
-requestAnimationFrame(
-rain
-);
+requestAnimationFrame(animateRain);
 
 }
 
-rain();
+window.addEventListener('resize',()=>{
+
+canvas.width=window.innerWidth;
+
+canvas.height=window.innerHeight;
+
+});
 
 </script>
 
