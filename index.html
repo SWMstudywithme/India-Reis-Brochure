@@ -1,304 +1,1243 @@
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>India – Moesson Reis</title>
+
+<title>India Klimaatreis | Dylan.L & Troy.K</title>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
 body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background: radial-gradient(circle at top, #7c2d12, #0f172a);
-  color:white;
+font-family:'Poppins',sans-serif;
+background:
+radial-gradient(circle at top,#a33f00,#0f172a);
+color:white;
+overflow-x:hidden;
 }
 
-/* HEADER */
+/* ===========================
+HEADER
+=========================== */
+
 header{
-  text-align:center;
-  padding:30px;
-  background:linear-gradient(90deg,#b91c1c,#f59e0b,#0ea5e9);
+background:
+linear-gradient(
+90deg,
+#c2410c,
+#f59e0b,
+#dc2626
+);
+padding:50px 20px;
+text-align:center;
+border-bottom:4px solid gold;
+position:relative;
 }
 
-h1{margin:0}
-
-/* BUTTONS */
-.switch{
-  margin-top:10px;
+header h1{
+font-size:3rem;
+margin-bottom:15px;
 }
 
-button{
-  padding:10px 15px;
-  border:none;
-  border-radius:12px;
-  margin:5px;
-  cursor:pointer;
-  font-weight:bold;
+header p{
+max-width:900px;
+margin:auto;
+line-height:1.7;
 }
 
-.active{background:#f59e0b}
-.inactive{background:#1f2937;color:white}
+/* ===========================
+NAV
+=========================== */
 
-/* LAYOUT */
+nav{
+position:sticky;
+top:0;
+z-index:1000;
+
+background:rgba(0,0,0,.75);
+backdrop-filter:blur(10px);
+
+display:flex;
+justify-content:center;
+gap:15px;
+
+padding:12px;
+flex-wrap:wrap;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+padding:10px 15px;
+border-radius:20px;
+transition:.3s;
+}
+
+nav a:hover{
+background:#f59e0b;
+}
+
+/* ===========================
+MOESSON SWITCH
+=========================== */
+
+.mode-container{
+margin-top:25px;
+}
+
+.mode-btn{
+padding:12px 18px;
+border:none;
+cursor:pointer;
+border-radius:30px;
+font-weight:bold;
+margin:5px;
+font-size:1rem;
+}
+
+.active{
+background:#f59e0b;
+}
+
+.inactive{
+background:#1f2937;
+color:white;
+}
+
+/* ===========================
+SECTIONS
+=========================== */
+
 section{
-  max-width:1000px;
-  margin:auto;
-  padding:20px;
+max-width:1200px;
+margin:auto;
+padding:50px 25px;
 }
+
+.section-title{
+font-size:2rem;
+margin-bottom:20px;
+color:#fbbf24;
+}
+
+/* ===========================
+INFO CARDS
+=========================== */
 
 .card{
-  background:rgba(255,255,255,0.08);
-  padding:15px;
-  margin:10px 0;
-  border-radius:10px;
+background:
+rgba(255,255,255,.08);
+
+backdrop-filter:blur(10px);
+
+border-left:5px solid gold;
+
+padding:20px;
+margin:15px 0;
+
+border-radius:15px;
+
+box-shadow:
+0 10px 30px rgba(0,0,0,.3);
+
+transition:.3s;
 }
 
-/* MAP */
+.card:hover{
+transform:translateY(-4px);
+}
+
+/* ===========================
+MAP
+=========================== */
+
 #map{
-  height:500px;
-  border-radius:15px;
-  border:2px solid gold;
+height:650px;
+border-radius:20px;
+overflow:hidden;
+border:3px solid gold;
 }
 
-/* POPUP */
+/* ===========================
+GRID
+=========================== */
+
+.grid{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(300px,1fr));
+
+gap:20px;
+}
+
+/* ===========================
+DAY CARDS
+=========================== */
+
+.day{
+background:
+rgba(255,255,255,.08);
+
+padding:20px;
+border-radius:15px;
+
+border-top:
+4px solid #f59e0b;
+}
+
+.day h3{
+margin-bottom:10px;
+color:#fbbf24;
+}
+
+.day ul{
+padding-left:20px;
+line-height:1.8;
+}
+
+/* ===========================
+VIDEOS
+=========================== */
+
+.video-grid{
+display:grid;
+grid-template-columns:
+repeat(auto-fit,minmax(300px,1fr));
+gap:20px;
+}
+
+.video-card{
+background:
+rgba(255,255,255,.08);
+
+padding:20px;
+border-radius:15px;
+}
+
+.video-card a{
+color:#60a5fa;
+}
+
+/* ===========================
+PAKLIJST
+=========================== */
+
+.checklist li{
+margin:10px 0;
+}
+
+/* ===========================
+POPUP
+=========================== */
+
 #popup{
-  position:fixed;
-  inset:0;
-  display:none;
-  justify-content:center;
-  align-items:center;
-  background:rgba(0,0,0,0.8);
+position:fixed;
+inset:0;
+
+display:none;
+
+justify-content:center;
+align-items:center;
+
+background:
+rgba(0,0,0,.85);
+
+z-index:9999;
 }
 
 #popupBox{
-  background:#111827;
-  padding:20px;
-  border-radius:15px;
-  max-width:500px;
+
+max-width:600px;
+width:90%;
+
+background:
+#111827;
+
+padding:20px;
+
+border-radius:20px;
+
+border:2px solid gold;
 }
 
 #popupBox img{
-  width:100%;
-  border-radius:10px;
+width:100%;
+border-radius:15px;
+margin-top:10px;
 }
 
-/* RAIN */
-#rain{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  pointer-events:none;
-  display:none;
+.closeBtn{
+margin-top:15px;
+padding:10px 15px;
+border:none;
+border-radius:10px;
+cursor:pointer;
 }
 
-/* FOOTER */
+/* ===========================
+RAIN
+=========================== */
+
+#rainCanvas{
+position:fixed;
+inset:0;
+
+pointer-events:none;
+
+display:none;
+
+z-index:5;
+}
+
+/* ===========================
+FOOTER
+=========================== */
+
 footer{
-  text-align:center;
-  padding:20px;
-  opacity:0.7;
+margin-top:50px;
+padding:40px;
+
+text-align:center;
+
+background:
+rgba(0,0,0,.4);
+
+border-top:
+2px solid gold;
 }
+
+/* ===========================
+RESPONSIVE
+=========================== */
+
+@media(max-width:768px){
+
+header h1{
+font-size:2rem;
+}
+
+#map{
+height:500px;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
-<canvas id="rain"></canvas>
+<canvas id="rainCanvas"></canvas>
 
 <header>
-<h1>🇮🇳 India – Moesson Reis</h1>
 
-<div class="switch">
-<button id="dryBtn" class="active" onclick="setMode('dry')">☀️ Droog</button>
-<button id="wetBtn" class="inactive" onclick="setMode('wet')">🌧️ Nat</button>
+<h1>🇮🇳 India Klimaatreis</h1>
+
+<p>
+Hoe kun je in 14 dagen zo veel mogelijk verschillende
+landschappen, klimaten, culturen en religies van India
+ervaren?
+</p>
+
+<div class="mode-container">
+
+<button
+class="mode-btn active"
+id="dryBtn">
+☀️ Droog Seizoen
+</button>
+
+<button
+class="mode-btn inactive"
+id="wetBtn">
+🌧️ Moessonseizoen
+</button>
+
 </div>
+
 </header>
 
-<section>
-<h2>🗺️ Kaart</h2>
+<nav>
+
+<a href="#kaart">Kaart</a>
+<a href="#planning">Dagplanning</a>
+<a href="#landschappen">Landschappen</a>
+<a href="#culturen">Culturen</a>
+<a href="#tips">Reistips</a>
+<a href="#videos">Video's</a>
+
+</nav>
+
+<section id="intro">
+
+<h2 class="section-title">
+🌏 Hoofdvraag
+</h2>
+
+<div class="card">
+
+<p>
+
+India is één van de meest gevarieerde landen ter wereld.
+Tijdens deze reis bezoeken we vier verschillende
+klimaatzones:
+
+</p>
+
+<br>
+
+<ul>
+
+<li>🌴 Tropisch regenwoudklimaat</li>
+<li>🏜️ Woestijnklimaat</li>
+<li>🏔️ Toendra / hooggebergteklimaat</li>
+<li>🌤️ Gematigd klimaat</li>
+
+</ul>
+
+<br>
+
+<p>
+
+De reis duurt 14 dagen waarvan 12 dagen in India
+en 2 reisdagen.
+
+</p>
+
+</div>
+
+</section>
+
+<section id="kaart">
+
+<h2 class="section-title">
+🗺️ Interactieve Klimaatkaart
+</h2>
+
 <div id="map"></div>
+
+<div class="card">
+
+Klik op de bestemmingspijlen om foto's en informatie
+over de bestemming te bekijken.
+
+</div>
+
+</section>
+<section id="planning">
+
+<h2 class="section-title">
+📅 12-Daagse Klimaatreis Door India
+</h2>
+
+<div class="grid">
+
+<div class="day">
+<h3>Dag 1 – Delhi</h3>
+<ul>
+<li>Aankomst in India</li>
+<li>India Gate bezoeken</li>
+<li>Wandeling door Connaught Place</li>
+<li>Proef Butter Chicken en Naan</li>
+<li>Overnachting: Delhi</li>
+</ul>
+</div>
+
+<div class="day">
+<h3>Dag 2 – Delhi</h3>
+<ul>
+<li>Rode Fort</li>
+<li>Lotus Tempel</li>
+<li>Qutub Minar</li>
+<li>Chandni Chowk Markt</li>
+<li>Overnachting: Delhi</li>
+</ul>
+</div>
+
+<div class="day">
+<h3>Dag 3 – Varanasi</h3>
+<ul>
+<li>Vlucht naar Varanasi</li>
+<li>Boottocht over de Ganges</li>
+<li>Ganga Aarti ceremonie</li>
+<li>Heilige ghats bezoeken</li>
+<li>Overnachting: Varanasi</li>
+</ul>
+</div>
+
+<div class="day">
+<h3>Dag 4 – Jaipur</h3>
+<ul>
+<li>Amber Fort</li>
+<li>Hawa Mahal</li>
+<li>Roze Stad verkennen</li>
+<li>Traditionele markt</li>
+<li>Overnachting: Jaipur</li>
+</ul>
+</div>
+
+<div class="day">
+<h3>Dag 5 – Jaisalmer</h3>
+<ul>
+<li>Trein naar Jaisalmer</li>
+<li>Jaisalmer Fort</li>
+<li>Woestijncultuur ontdekken</li>
+<li>Lokale gerechten proeven</li>
+<li>Overnachting: Jaisalmer</li>
+</ul>
+</div>
+
+<div class="day">
+<h3>Dag 6 – Tharwoestijn</h3>
+<ul>
+<li>Kameelsafari</li>
+<li>Zandduinen bezoeken</li>
+<li>Zonsondergang bekijken</li>
+<li>Kampvuur in de woestijn</li>
+<li>Overnachting: Woestijnkamp</li>
+</ul>
+</div>
+
+<div class="day">
+<h3>Dag 7 – Kochi</h3>
+<ul>
+<li>Vlucht naar Kerala</li>
+<li>Chinese visnetten bekijken</li>
+<li>Fort Kochi bezoeken</li>
+<li>Koloniale architectuur</li>
+<li>Overnachting: Kochi</li>
+</ul>
+</div>
+
+<div class="day">
+<h3>Dag 8 – Kochi</h3>
+<ul>
+<li>Mattancherry Palace</li>
+<li>Joodse wijk bezoeken</li>
+<li>Kathakali voorstelling</li>
+<li>Lokale visgerechten eten</li>
+<li>Overnachting: Kochi</li>
+</ul>
+</div>
+
+<div class="day">
+<h3>Dag 9 – Munnar</h3>
+<ul>
+<li>Theeplantages</li>
+<li>West-Ghats gebergte</li>
+<li>Natuurreservaat</li>
+<li>Wandelen door mistige heuvels</li>
+<li>Overnachting: Munnar</li>
+</ul>
+</div>
+
+<div class="day">
+<h3>Dag 10 – Leh</h3>
+<ul>
+<li>Vlucht naar Ladakh</li>
+<li>Hooggebergteklimaat</li>
+<li>Kloosters bezoeken</li>
+<li>Uitzicht op Himalaya</li>
+<li>Overnachting: Leh</li>
+</ul>
+</div>
+
+<div class="day">
+<h3>Dag 11 – Nubra Valley</h3>
+<ul>
+<li>Khardung La bergpas</li>
+<li>Dubbelbultige kamelen</li>
+<li>Toendra-achtig landschap</li>
+<li>Fotografie</li>
+<li>Overnachting: Nubra Valley</li>
+</ul>
+</div>
+
+<div class="day">
+<h3>Dag 12 – Pangong Tso</h3>
+<ul>
+<li>Hooggelegen zoutmeer</li>
+<li>Uniek berglandschap</li>
+<li>Laatste excursie</li>
+<li>Terug naar Leh</li>
+<li>Voorbereiden op terugreis</li>
+</ul>
+</div>
+
+</div>
+
+</section>
+
+<section id="landschappen">
+
+<h2 class="section-title">
+🏞️ Landschappen van India
+</h2>
+
+<div class="card">
+
+India kent een enorme geografische diversiteit.
+
+<ul>
+
+<li>🌤️ Vruchtbare riviergebieden rond de Ganges</li>
+
+<li>🏜️ Droge woestijngebieden in Rajasthan</li>
+
+<li>🌴 Tropische regenwouden en kustgebieden in Kerala</li>
+
+<li>🏔️ Hooggebergten en koude toendra-achtige gebieden in Ladakh</li>
+
+<li>🌊 Lagunes en backwaters langs de zuidwestkust</li>
+
+</ul>
+
+</div>
+
+</section>
+
+<section id="culturen">
+
+<h2 class="section-title">
+🕌 Culturen en Religies
+</h2>
+
+<div class="card">
+
+<p>
+
+India heeft honderden bevolkingsgroepen, tientallen talen
+en verschillende religies.
+
+</p>
+
+<br>
+
+<ul>
+
+<li>🕉️ Hindoeïsme in Varanasi</li>
+
+<li>☪️ Islamitische invloeden in Agra en Delhi</li>
+
+<li>✝️ Christelijke invloeden in Kerala</li>
+
+<li>🏔️ Boeddhistische cultuur in Ladakh</li>
+
+<li>🗣️ Talen zoals Hindi, Engels, Malayalam en Ladakhi</li>
+
+</ul>
+
+</div>
+
 </section>
 
 <section>
-<h2>📅 Dagplanning</h2>
-<div id="plan"></div>
+
+<h2 class="section-title">
+🙏 Heilige Steden en Rivieren
+</h2>
+
+<div class="card">
+
+<h3>Varanasi</h3>
+
+<p>
+
+Varanasi wordt beschouwd als de heiligste stad van het
+hindoeïsme. Miljoenen pelgrims bezoeken jaarlijks de stad.
+
+</p>
+
+<br>
+
+<h3>De Ganges</h3>
+
+<p>
+
+De Ganges is de belangrijkste heilige rivier van India.
+Veel hindoes geloven dat baden in de rivier spirituele
+zuivering brengt.
+
+</p>
+
+</div>
+
 </section>
 
+<section>
+
+<h2 class="section-title">
+🇮🇳 Typisch India
+</h2>
+
+<div class="card">
+
+<ul>
+
+<li>Kleurrijke sari's en traditionele kleding</li>
+
+<li>Drukke markten en bazaars</li>
+
+<li>Heilige koeien op straat</li>
+
+<li>Pittige gerechten met veel kruiden</li>
+
+<li>Tuktuks als vervoermiddel</li>
+
+<li>Bollywoodfilms</li>
+
+<li>Religieuze festivals</li>
+
+<li>Tempels, paleizen en forten</li>
+
+<li>Grote verschillen tussen arm en rijk</li>
+
+</ul>
+
+</div>
+
+</section>
+
+<section id="tips">
+
+<h2 class="section-title">
+🧳 Reistips
+</h2>
+
+<div class="grid">
+
+<div class="card">
+
+<h3>📄 Visum</h3>
+
+<p>
+
+Nederlandse reizigers hebben een e-visa nodig voor India.
+
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>💉 Vaccinaties</h3>
+
+<ul>
+
+<li>DTP</li>
+<li>Hepatitis A</li>
+<li>Soms Hepatitis B</li>
+<li>Soms Buiktyfus</li>
+
+</ul>
+
+</div>
+
+<div class="card">
+
+<h3>💰 Geld</h3>
+
+<p>
+
+In India betaalt men met de Indiase Roepie (INR).
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section>
+
+<h2 class="section-title">
+🎒 Paklijst
+</h2>
+
+<div class="card">
+
+<ul class="checklist">
+
+<li>Paspoort</li>
+
+<li>Visum</li>
+
+<li>Reisverzekering</li>
+
+<li>Vliegtickets</li>
+
+<li>Luchtige kleding</li>
+
+<li>Lange broek voor tempels</li>
+
+<li>Wandelschoenen</li>
+
+<li>Regenjas</li>
+
+<li>Zonnebrandcrème</li>
+
+<li>Muggenmiddel</li>
+
+<li>EHBO-set</li>
+
+<li>Persoonlijke medicijnen</li>
+
+</ul>
+
+</div>
+
+</section>
+
+<section id="videos">
+
+<h2 class="section-title">
+🎥 Video's en Bezienswaardigheden
+</h2>
+
+<div class="video-grid">
+
+<div class="video-card">
+
+<h3>Taj Mahal</h3>
+
+<a target="_blank"
+href="https://www.youtube.com/results?search_query=taj+mahal+tour">
+
+Bekijk op YouTube
+
+</a>
+
+</div>
+
+<div class="video-card">
+
+<h3>Boottocht Ganges</h3>
+
+<a target="_blank"
+href="https://www.youtube.com/results?search_query=boat+ride+ganges+varanasi">
+
+Bekijk op YouTube
+
+</a>
+
+</div>
+
+<div class="video-card">
+
+<h3>Kathakali Dans</h3>
+
+<a target="_blank"
+href="https://www.youtube.com/results?search_query=kathakali+dance+kerala">
+
+Bekijk op YouTube
+
+</a>
+
+</div>
+
+<div class="video-card">
+
+<h3>Ladakh</h3>
+
+<a target="_blank"
+href="https://www.youtube.com/results?search_query=ladakh+travel">
+
+Bekijk op YouTube
+
+</a>
+
+</div>
+
+</div>
+
+</section>
 <footer>
-made by Dylan.L & Troy.k
+
+<h3>🇮🇳 India Klimaatreis Project</h3>
+
+<p>
+Gemaakt voor aardrijkskunde – Klimaat, cultuur,
+landschappen en geografie van India.
+</p>
+
+<br>
+
+<p>
+made by Dylan.L & Troy.K
+</p>
+
 </footer>
 
 <!-- POPUP -->
-<div id="popup" onclick="closePopup()">
-  <div id="popupBox">
-    <h2 id="title"></h2>
-    <img id="img">
-    <p id="text"></p>
-  </div>
+
+<div id="popup">
+
+<div id="popupBox">
+
+<h2 id="popupTitle"></h2>
+
+<p id="popupText"></p>
+
+<img
+id="popupImg"
+src=""
+alt="Bestemming">
+
+<br>
+
+<button
+class="closeBtn"
+onclick="closePopup()">
+
+Sluiten
+
+</button>
+
+</div>
+
 </div>
 
 <script>
 
-/* MAP INIT */
-const map = L.map('map').setView([22.9,78.6],5);
+/* ===========================
+KAART
+=========================== */
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
-.addTo(map);
+const map = L.map('map').setView([22.5,79],5);
 
-let mode = "dry";
-let markers = [];
+L.tileLayer(
+'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+{
+attribution:'© OpenStreetMap'
+}
+).addTo(map);
 
-/* DATA */
-const dry = [
+/* ===========================
+BESTEMMINGEN
+=========================== */
+
+const drySeason = [
+
 {
 name:"Delhi",
-coords:[28.6,77.2],
+coords:[28.6139,77.2090],
 img:"https://upload.wikimedia.org/wikipedia/commons/1/10/India_Gate_in_New_Delhi_03-2016_img3.jpg",
-text:"Hoofdstad, cultuur en markten"
+text:"Hoofdstad van India. Gematigd klimaat."
 },
-{
-name:"Jaipur",
-coords:[26.9,75.8],
-img:"https://upload.wikimedia.org/wikipedia/commons/9/99/Hawa_Mahal_2011.jpg",
-text:"Woestijnstad en forten"
-},
+
 {
 name:"Varanasi",
-coords:[25.3,82.9],
+coords:[25.3176,82.9739],
 img:"https://upload.wikimedia.org/wikipedia/commons/1/1e/Varanasi_Ghats.jpg",
-text:"Heilige Ganges stad"
-}
-];
+text:"Heilige stad aan de rivier de Ganges."
+},
 
-const wet = [
+{
+name:"Jaipur",
+coords:[26.9124,75.7873],
+img:"https://upload.wikimedia.org/wikipedia/commons/9/99/Hawa_Mahal_2011.jpg",
+text:"Woestijnstad in Rajasthan."
+},
+
+{
+name:"Jaisalmer",
+coords:[26.9157,70.9083],
+img:"https://upload.wikimedia.org/wikipedia/commons/0/08/Jaisalmer_Fort.jpg",
+text:"Poort naar de Tharwoestijn."
+},
+
 {
 name:"Kochi",
-coords:[9.9,76.2],
+coords:[9.9312,76.2673],
 img:"https://upload.wikimedia.org/wikipedia/commons/6/6f/Chinese_fishing_nets_Kochi.jpg",
-text:"Tropisch regenklimaat"
+text:"Tropische kuststad in Kerala."
 },
+
 {
 name:"Munnar",
-coords:[10.0,77.0],
+coords:[10.0889,77.0595],
 img:"https://upload.wikimedia.org/wikipedia/commons/0/0b/Munnar_Tea_plantation.jpg",
-text:"Theeplantages in bergen"
+text:"Bekend om theeplantages."
 },
+
 {
-name:"Alleppey",
-coords:[9.5,76.3],
-img:"https://upload.wikimedia.org/wikipedia/commons/3/3a/Alleppey_backwaters.jpg",
-text:"Backwaters + moesson"
+name:"Leh",
+coords:[34.1526,77.5771],
+img:"https://upload.wikimedia.org/wikipedia/commons/7/72/Leh_Palace.jpg",
+text:"Hooggebergtegebied in Ladakh."
 }
+
 ];
 
-/* LOAD MAP */
-function load(data){
-markers.forEach(m => map.removeLayer(m));
-markers = [];
+/* ===========================
+MOESSON VERSIE
+=========================== */
 
-data.forEach(p => {
-let marker = L.marker(p.coords).addTo(map);
-marker.on("click", () => openPopup(p));
-markers.push(marker);
-});
+const wetSeason = [
+
+{
+name:"Kochi",
+coords:[9.9312,76.2673],
+img:"https://upload.wikimedia.org/wikipedia/commons/6/6f/Chinese_fishing_nets_Kochi.jpg",
+text:"Tijdens de moesson valt hier veel regen."
+},
+
+{
+name:"Munnar",
+coords:[10.0889,77.0595],
+img:"https://upload.wikimedia.org/wikipedia/commons/0/0b/Munnar_Tea_plantation.jpg",
+text:"Mistige bergen en veel neerslag."
+},
+
+{
+name:"Alleppey",
+coords:[9.4981,76.3388],
+img:"https://upload.wikimedia.org/wikipedia/commons/3/3a/Alleppey_backwaters.jpg",
+text:"Backwaters en tropische regen."
+},
+
+{
+name:"Leh",
+coords:[34.1526,77.5771],
+img:"https://upload.wikimedia.org/wikipedia/commons/7/72/Leh_Palace.jpg",
+text:"Droger hooggebergtegebied."
 }
 
-/* POPUP */
-function openPopup(p){
-document.getElementById("popup").style.display = "flex";
-document.getElementById("title").innerText = p.name;
-document.getElementById("img").src = p.img;
-document.getElementById("text").innerText = p.text;
+];
+
+let currentMarkers = [];
+
+/* ===========================
+MARKERS
+=========================== */
+
+function clearMarkers(){
+
+currentMarkers.forEach(marker=>{
+map.removeLayer(marker);
+});
+
+currentMarkers=[];
+
+}
+
+function loadMarkers(data){
+
+clearMarkers();
+
+data.forEach(place=>{
+
+const marker = L.marker(place.coords)
+.addTo(map);
+
+marker.on("click",()=>{
+
+showPopup(
+place.name,
+place.text,
+place.img
+);
+
+});
+
+currentMarkers.push(marker);
+
+});
+
+}
+
+loadMarkers(drySeason);
+
+/* ===========================
+POPUP
+=========================== */
+
+function showPopup(title,text,img){
+
+document
+.getElementById("popup")
+.style.display="flex";
+
+document
+.getElementById("popupTitle")
+.innerText=title;
+
+document
+.getElementById("popupText")
+.innerText=text;
+
+document
+.getElementById("popupImg")
+.src=img;
+
 }
 
 function closePopup(){
-document.getElementById("popup").style.display = "none";
+
+document
+.getElementById("popup")
+.style.display="none";
+
 }
 
-/* PLAN */
-function renderPlan(){
-const el = document.getElementById("plan");
+/* ===========================
+SWITCH
+=========================== */
 
-if(mode === "dry"){
-el.innerHTML = `
-<div class="card">Dag 1-3 Delhi → Red Fort + streetfood</div>
-<div class="card">Dag 4-6 Jaipur → Amber Fort + woestijn</div>
-<div class="card">Dag 7-9 Varanasi → Ganges rituelen</div>
-`;
-} else {
-el.innerHTML = `
-<div class="card">Dag 1-3 Kochi → koloniale stad</div>
-<div class="card">Dag 4-6 Munnar → thee + mist</div>
-<div class="card">Dag 7-9 Alleppey → houseboat</div>
-`;
-}
-}
+const dryBtn =
+document.getElementById("dryBtn");
 
-/* RAIN */
-const canvas = document.getElementById("rain");
-const ctx = canvas.getContext("2d");
+const wetBtn =
+document.getElementById("wetBtn");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+dryBtn.addEventListener("click",()=>{
 
-let drops = [];
+dryBtn.classList.add("active");
+wetBtn.classList.remove("active");
 
-function rainInit(){
-drops = [];
-for(let i=0;i<120;i++){
-drops.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-l:Math.random()*20+10,
-s:Math.random()*8+4
+loadMarkers(drySeason);
+
+document
+.getElementById("rainCanvas")
+.style.display="none";
+
 });
-}
+
+wetBtn.addEventListener("click",()=>{
+
+wetBtn.classList.add("active");
+dryBtn.classList.remove("active");
+
+loadMarkers(wetSeason);
+
+document
+.getElementById("rainCanvas")
+.style.display="block";
+
+});
+
+/* ===========================
+REGEN EFFECT
+=========================== */
+
+const canvas =
+document.getElementById("rainCanvas");
+
+const ctx =
+canvas.getContext("2d");
+
+canvas.width =
+window.innerWidth;
+
+canvas.height =
+window.innerHeight;
+
+const drops=[];
+
+for(let i=0;i<200;i++){
+
+drops.push({
+
+x:Math.random()*canvas.width,
+
+y:Math.random()*canvas.height,
+
+length:10+Math.random()*20,
+
+speed:4+Math.random()*5
+
+});
+
 }
 
-function rain(){
-ctx.clearRect(0,0,canvas.width,canvas.height);
-ctx.strokeStyle = "rgba(180,200,255,0.6)";
+function animateRain(){
 
-for(let d of drops){
+ctx.clearRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+ctx.strokeStyle=
+"rgba(180,220,255,.5)";
+
+ctx.lineWidth=1;
+
+drops.forEach(drop=>{
+
 ctx.beginPath();
-ctx.moveTo(d.x,d.y);
-ctx.lineTo(d.x,d.y+d.l);
+
+ctx.moveTo(
+drop.x,
+drop.y
+);
+
+ctx.lineTo(
+drop.x,
+drop.y+drop.length
+);
+
 ctx.stroke();
 
-d.y += d.s;
-if(d.y > canvas.height){
-d.y = -20;
-d.x = Math.random()*canvas.width;
-}
-}
+drop.y+=drop.speed;
 
-if(mode === "wet") requestAnimationFrame(rain);
-}
+if(
+drop.y>
+canvas.height
+){
 
-/* SWITCH */
-function setMode(m){
-mode = m;
+drop.y=-20;
 
-document.getElementById("dryBtn").className = m==="dry"?"active":"inactive";
-document.getElementById("wetBtn").className = m==="wet"?"active":"inactive";
+drop.x=
+Math.random()
+*canvas.width;
 
-load(m==="dry"?dry:wet);
-renderPlan();
-
-if(m === "wet"){
-canvas.style.display = "block";
-rainInit();
-rain();
-}else{
-canvas.style.display = "none";
-}
 }
 
-setMode("dry");
+});
+
+requestAnimationFrame(
+animateRain
+);
+
+}
+
+animateRain();
+
+/* ===========================
+RESPONSIVE
+=========================== */
+
+window.addEventListener(
+"resize",
+()=>{
+
+canvas.width=
+window.innerWidth;
+
+canvas.height=
+window.innerHeight;
+
+}
+);
 
 </script>
 
