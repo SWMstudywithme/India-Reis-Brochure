@@ -950,6 +950,7 @@ text:"Blijft relatief droog."
 ];
 
 let markers=[];
+let rainAnimationId=null;
 
 /* ==========================
 MARKERS
@@ -1012,48 +1013,6 @@ document.getElementById('popup').style.display='flex';
 function closePopup(){
 
 document.getElementById('popup').style.display='none';
-
-}
-
-/* ==========================
-SEIZOEN SWITCHING
-========================== */
-
-document.getElementById('dryBtn').addEventListener('click',()=>{
-
-document.getElementById('dryBtn').classList.add('active');
-
-document.getElementById('dryBtn').classList.remove('inactive');
-
-document.getElementById('wetBtn').classList.remove('active');
-
-document.getElementById('wetBtn').classList.add('inactive');
-
-loadMarkers(droogBestemmingen);
-
-});
-
-document.getElementById('wetBtn').addEventListener('click',()=>{
-
-document.getElementById('wetBtn').classList.add('active');
-
-document.getElementById('wetBtn').classList.remove('inactive');
-
-document.getElementById('dryBtn').classList.remove('active');
-
-document.getElementById('dryBtn').classList.add('inactive');
-
-loadMarkers(moessonBestemmingen);
-
-});
-
-/* ==========================
-FUN FACTS
-========================== */
-
-function showFact(fact){
-
-alert(fact);
 
 }
 
@@ -1125,7 +1084,27 @@ drop.draw();
 
 });
 
-requestAnimationFrame(animateRain);
+rainAnimationId=requestAnimationFrame(animateRain);
+
+}
+
+function startRain(){
+
+canvas.style.display='block';
+
+animateRain();
+
+}
+
+function stopRain(){
+
+canvas.style.display='none';
+
+if(rainAnimationId){
+
+cancelAnimationFrame(rainAnimationId);
+
+}
 
 }
 
@@ -1136,6 +1115,52 @@ canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
 
 });
+
+/* ==========================
+SEIZOEN SWITCHING
+========================== */
+
+document.getElementById('dryBtn').addEventListener('click',()=>{
+
+document.getElementById('dryBtn').classList.add('active');
+
+document.getElementById('dryBtn').classList.remove('inactive');
+
+document.getElementById('wetBtn').classList.remove('active');
+
+document.getElementById('wetBtn').classList.add('inactive');
+
+loadMarkers(droogBestemmingen);
+
+stopRain();
+
+});
+
+document.getElementById('wetBtn').addEventListener('click',()=>{
+
+document.getElementById('wetBtn').classList.add('active');
+
+document.getElementById('wetBtn').classList.remove('inactive');
+
+document.getElementById('dryBtn').classList.remove('active');
+
+document.getElementById('dryBtn').classList.add('inactive');
+
+loadMarkers(moessonBestemmingen);
+
+startRain();
+
+});
+
+/* ==========================
+FUN FACTS
+========================== */
+
+function showFact(fact){
+
+alert(fact);
+
+}
 
 </script>
 
